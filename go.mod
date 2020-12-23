@@ -1,4 +1,4 @@
-module xrror
+module github.com/arcnadiven/xrror
 
 go 1.13
 
