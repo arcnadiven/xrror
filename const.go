@@ -10,4 +10,7 @@ var (
 
 	_DEFAULT_LOG_FILE = "xrror.log"
 	_LOG              = false
+
+	_DEFAULT_RTC_FILE = "rtc failed unknown file"
+	_DEFAULT_RTC_LINE = 0
 )

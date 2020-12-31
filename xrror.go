@@ -35,27 +35,31 @@ func SetTimeFormat(str string) {
 	_DEFAULT_TIME_FORMAT = str
 }
 
-func String(str string) error {
+func Error(str string) error {
 	return genXrror(_DEFAULT_ERROR_CODE, str, _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
 }
 
-func StringWithCode(code, str string) error {
-	return genXrror(code, str, _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
+func Errorf(format string, args ...string) error {
+	return genXrror(_DEFAULT_ERROR_CODE, fmt.Sprintf(format, args), _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
 }
 
-func New(err error) error {
+func WithStack(err error) error {
 	return genXrror(_DEFAULT_ERROR_CODE, err.Error(), _DEFAULT_STACK_DEEPTH, _DEFAULT_STACK_DEEPTH)
 }
 
-func NewWithCode(code string, err error) error {
-	return genXrror(code, err.Error(), _DEFAULT_STACK_DEEPTH, _DEFAULT_STACK_DEEPTH)
+func ErrorWithCode(code, str string) error {
+	return genXrror(code, str, _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
+}
+
+func ErrorfWithCode(code, format string, args ...string) error {
+	return genXrror(code, fmt.Sprintf(format, args), _DEFAULT_STACK_DEEPTH, _DEFAULT_STACK_DEEPTH)
 }
 
 func genXrror(code, str string, depth, pl int) error {
 	_, file, line, ok := runtime.Caller(depth)
 	if !ok {
-		file = `unknown file`
-		line = 0
+		file = _DEFAULT_RTC_FILE
+		line = _DEFAULT_RTC_LINE
 	}
 	if pl > 0 {
 		pathList := strings.Split(file, string(os.PathSeparator))
