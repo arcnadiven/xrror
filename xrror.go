@@ -39,8 +39,8 @@ func Error(str string) error {
 	return genXrror(_DEFAULT_ERROR_CODE, str, _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
 }
 
-func Errorf(format string, args ...string) error {
-	return genXrror(_DEFAULT_ERROR_CODE, fmt.Sprintf(format, args), _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
+func Errorf(format string, args ...interface{}) error {
+	return genXrror(_DEFAULT_ERROR_CODE, fmt.Sprintf(format, args...), _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
 }
 
 func WithStack(err error) error {
@@ -51,8 +51,12 @@ func ErrorWithCode(code, str string) error {
 	return genXrror(code, str, _DEFAULT_STACK_DEEPTH, _DEFAULT_PATH_LAYER)
 }
 
-func ErrorfWithCode(code, format string, args ...string) error {
-	return genXrror(code, fmt.Sprintf(format, args), _DEFAULT_STACK_DEEPTH, _DEFAULT_STACK_DEEPTH)
+func ErrorfWithCode(code, format string, args ...interface{}) error {
+	return genXrror(code, fmt.Sprintf(format, args...), _DEFAULT_STACK_DEEPTH, _DEFAULT_STACK_DEEPTH)
+}
+
+func StackWithCode(code string, err error) error {
+	return genXrror(code, err.Error(), _DEFAULT_STACK_DEEPTH, _DEFAULT_STACK_DEEPTH)
 }
 
 func genXrror(code, str string, depth, pl int) error {

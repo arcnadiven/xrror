@@ -11,15 +11,15 @@ func init() {
 }
 
 func TestNewXrror(t *testing.T) {
-	if err := CatchError(); err != nil {
+	if err := catchError(); err != nil {
 		fmt.Println(err)
 	}
 }
 
-func CatchError() error {
+func catchError() error {
 	_, err := os.Open("dsdasd")
 	if err != nil {
-		return New(err)
+		return WithStack(err)
 	}
 	return nil
 }
